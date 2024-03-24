@@ -1,4 +1,4 @@
-package ru.nanaslav.tasksmicroservice;
+package ru.nanaslav.projectsmicroservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class TasksMicroserviceApplication {
+public class ProjectsMicroserviceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TasksMicroserviceApplication.class, args);
+        SpringApplication.run(ProjectsMicroserviceApplication.class, args);
     }
 
 }

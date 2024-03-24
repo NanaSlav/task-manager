@@ -2,3 +2,4 @@ rootProject.name = 'task-manager-app'
 
 includeBuild 'eureka-server'
 includeBuild 'tasks-microservice'
+includeBuild 'projects-microservice'
