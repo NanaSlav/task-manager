@@ -1,2 +1,3 @@
 rootProject.name = 'task-manager-app'
 
+includeBuild 'eureka-server'
