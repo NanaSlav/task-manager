@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/eureka-server" name="eureka-server">
+                <projects>
+                  <project path="$PROJECT_DIR$/eureka-server" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/tasks-microservice" name="tasks-microservice">
+                <projects>
+                  <project path="$PROJECT_DIR$/tasks-microservice" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/projects-microservice" name="projects-microservice">
+                <projects>
+                  <project path="$PROJECT_DIR$/projects-microservice" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/users-microservice" name="users-microservice">
+                <projects>
+                  <project path="$PROJECT_DIR$/users-microservice" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/api-gateway" name="api-gateway">
+                <projects>
+                  <project path="$PROJECT_DIR$/api-gateway" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/api-gateway" />
+            <option value="$PROJECT_DIR$/eureka-server" />
+            <option value="$PROJECT_DIR$/projects-microservice" />
+            <option value="$PROJECT_DIR$/tasks-microservice" />
+            <option value="$PROJECT_DIR$/users-microservice" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
