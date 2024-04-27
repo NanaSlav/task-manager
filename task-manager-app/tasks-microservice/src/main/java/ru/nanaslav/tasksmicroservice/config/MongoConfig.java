@@ -21,7 +21,7 @@ public class MongoConfig  extends AbstractMongoClientConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        ConnectionString connectionString = new ConnectionString("mongodb://localhost:27018/tasks");
+        ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/tasks");
         MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
                 .build();
