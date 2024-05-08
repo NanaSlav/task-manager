@@ -34,10 +34,8 @@ public class UserService implements UserDetailsService {
      * @return {@link User} пользователь
      */
     public User createUser(String username, String password) {
-        // TODO возможно стоит сделать шифрование пароля сразу на стороне фронта?
         User user = new User(username, bCryptPasswordEncoder.encode(password));
-        userRepository.insert(user);
-        return user;
+        return createUser(user);
     }
 
     /**
@@ -48,12 +46,25 @@ public class UserService implements UserDetailsService {
      */
 
     public User createUser (User user) {
-        // TODO здесь должна быть куча проверок, но пока оставлю так
-        return userRepository.insert(user);
+        if (!isUserExists(user)) {
+            return userRepository.insert(user);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
+    }
+
+    /**
+     * Проверка наличия пользователя в системе
+     * @param user Пользователь
+     * @return {@link boolean}
+     */
+    private boolean isUserExists(User user) {
+        // TODO после добаввления почты нужно добавить в эту проверку и ее
+        return userRepository.findByUsername(user.getUsername()) != null;
     }
 }

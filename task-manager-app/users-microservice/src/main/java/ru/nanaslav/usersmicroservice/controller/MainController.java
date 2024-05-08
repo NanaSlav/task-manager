@@ -5,7 +5,6 @@ package ru.nanaslav.usersmicroservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.nanaslav.usersmicroservice.model.User;
 import ru.nanaslav.usersmicroservice.repository.UserRepository;
@@ -35,8 +34,7 @@ public class MainController {
      */
     @GetMapping("/home")
     public String home() {
-        User user = new User("nanaslav", "123");
-        userRepository.insert(user);
+        userService.createUser("nanaslav", "123");
         return "users - home";
     }
 
@@ -52,8 +50,14 @@ public class MainController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * Получение пользователя по имени
+     *
+     * @param username имя пользователя
+     * @return {@link ResponseEntity<User>}
+     */
     @GetMapping("/")
-    public ResponseEntity<User> getUser(@RequestBody String username) {
+    public ResponseEntity<User> getUserByUsername(@RequestBody String username) {
         // TODO надо сделать по человечески...
         // User user = (User) userService.loadUserByUsername(username);
         User user = userRepository.findByUsername(username);
@@ -63,5 +67,10 @@ public class MainController {
             // TODO тут бы тоже не с 404 возвращать..
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
     }
 }
