@@ -27,6 +27,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     implementation 'org.projectlombok:lombok:1.18.22'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

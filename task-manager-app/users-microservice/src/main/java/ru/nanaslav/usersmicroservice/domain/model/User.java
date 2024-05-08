@@ -1,7 +1,7 @@
 /**
  * Created on 26/04/2024
  */
-package ru.nanaslav.usersmicroservice.model;
+package ru.nanaslav.usersmicroservice.domain.model;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package ru.nanaslav.usersmicroservice.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import ru.nanaslav.usersmicroservice.model.User;
+import ru.nanaslav.usersmicroservice.domain.model.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
     User findByUsername(String username);

@@ -9,8 +9,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.nanaslav.usersmicroservice.model.User;
+import ru.nanaslav.usersmicroservice.domain.model.User;
 
 import java.security.Key;
 import java.util.Date;
@@ -43,7 +44,7 @@ public class JwtService {
      * @param user данные пользователя
      * @return токен
      */
-    private String generateToken(Map<String, Object> extraClaims, User user) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails user) {
         return Jwts.builder().setClaims(extraClaims).setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))

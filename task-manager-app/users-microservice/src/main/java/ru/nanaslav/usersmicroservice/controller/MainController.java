@@ -6,7 +6,7 @@ package ru.nanaslav.usersmicroservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nanaslav.usersmicroservice.model.User;
+import ru.nanaslav.usersmicroservice.domain.model.User;
 import ru.nanaslav.usersmicroservice.repository.UserRepository;
 import ru.nanaslav.usersmicroservice.service.UserService;
 
