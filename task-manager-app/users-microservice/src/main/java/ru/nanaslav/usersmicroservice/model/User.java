@@ -3,6 +3,8 @@
  */
 package ru.nanaslav.usersmicroservice.model;
 
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +19,8 @@ import java.util.Collection;
  * @version 0.0.1
  */
 @Document("users")
+@Data
+@Builder
 public class User implements UserDetails {
 
     public User (String username, String password) {
@@ -34,16 +38,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override
