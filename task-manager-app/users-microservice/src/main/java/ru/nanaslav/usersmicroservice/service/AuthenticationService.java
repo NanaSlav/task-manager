@@ -45,7 +45,7 @@ public class AuthenticationService {
                 .build();
         userService.createUser(user);
 
-        String jwt = jwtService.generateToken(null, user);
+        String jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
     }
 
@@ -61,7 +61,7 @@ public class AuthenticationService {
                 request.getPassword()
         ));
         var user = userService.loadUserByUsername(request.getUsername());
-        String jwt = jwtService.generateToken(null, user);
+        String jwt = jwtService.generateToken( user);
         return new JwtAuthenticationResponse(jwt);
     }
 }

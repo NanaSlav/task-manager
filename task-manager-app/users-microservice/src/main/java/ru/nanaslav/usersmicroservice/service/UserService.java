@@ -3,7 +3,9 @@
  */
 package ru.nanaslav.usersmicroservice.service;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,8 +24,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     /**
      * Создание нового пользователя
@@ -34,7 +38,10 @@ public class UserService implements UserDetailsService {
      * @return {@link User} пользователь
      */
     public User createUser(String username, String password) {
-        User user = new User(username, bCryptPasswordEncoder.encode(password));
+        User user = User.builder()
+                .username(username)
+                .password(bCryptPasswordEncoder().encode(password))
+                .build();
         return createUser(user);
     }
 
@@ -63,8 +70,7 @@ public class UserService implements UserDetailsService {
      * @param user Пользователь
      * @return {@link boolean}
      */
-    private boolean isUserExists(User user) {
-        // TODO после добаввления почты нужно добавить в эту проверку и ее
+    private boolean isUserExists(@NotNull User user) {
         return userRepository.findByUsername(user.getUsername()) != null;
     }
 }

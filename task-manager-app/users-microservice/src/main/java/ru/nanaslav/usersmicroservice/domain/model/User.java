@@ -3,8 +3,7 @@
  */
 package ru.nanaslav.usersmicroservice.domain.model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,20 +18,13 @@ import java.util.Collection;
  * @version 0.0.1
  */
 @Document("users")
-@Data
 @Builder
+@Data
 public class User implements UserDetails {
-
-    public User (String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     @Id
     private String id;
 
-    private final String username;
-
+    private String username;
     private String password;
 
     @Override

@@ -11,10 +11,10 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.nanaslav.usersmicroservice.domain.model.User;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -26,7 +26,7 @@ import java.util.function.Function;
  */
 @Service
 public class JwtService {
-    private String jwtSigningKey = "6A576D5A7134743777217A25432A462D4A614E645267556B5870327235753878";
+    private String jwtSigningKey = "53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855";
 
     /**
      * Извлечение имени пользователя из токена
@@ -52,13 +52,23 @@ public class JwtService {
     }
 
     /**
+     * Генерация токена
+     *
+     * @param user данные пользователя
+     * @return токен
+     */
+    public String generateToken(UserDetails user) {
+        return generateToken(new HashMap<>(), user);
+    }
+
+    /**
      * Проверка валидности токена
      *
      * @param token токен
      * @param user пользователь
      * @return {@link Boolean} true если токен валиден
      */
-    public boolean isTokenValid(String token, User user) {
+    public boolean isTokenValid(String token, UserDetails user) {
         final String userName = extractUserName(token);
         return (userName.equals(user.getUsername())) && !isTokenExpired(token);
     }
@@ -105,9 +115,10 @@ public class JwtService {
      */
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(getSigningKey())
+                .verifyWith(getSigningKey())
+                .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getPayload();
     }
 
     /**
@@ -115,7 +126,7 @@ public class JwtService {
      *
      * @return ключ
      */
-    private Key getSigningKey() {
+    private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
