@@ -4,7 +4,6 @@
  */
 package ru.nanaslav.usersmicroservice.config;
 
-import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +46,6 @@ public class WebSecurityConfig {
         http.cors(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests((authz) -> authz
-
                         .requestMatchers(HttpMethod.POST,"/auth/sign-up").permitAll()
                         .anyRequest().authenticated()
                 )

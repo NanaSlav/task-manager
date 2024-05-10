@@ -3,9 +3,12 @@
  */
 package ru.nanaslav.apigateway.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.nanaslav.apigateway.filter.AuthenticationFilter;
 
 /**
  * Конфигурации путей api
@@ -14,16 +17,22 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RouteConfiguration {
-    // TODO добавить фильры для аутентификации
+    @Autowired
+    AuthenticationFilter filter;
+
+    @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("auth-routes", r -> r.path("/auth/**")
                         .uri("lb://users-microservice"))
                 .route("users-routes", r -> r.path("/users/**")
+                        .filters(f -> f.filter(filter))
                         .uri("lb://users-microservice"))
                 .route("tasks-routes", r -> r.path("/tasks/**")
+                        .filters(f -> f.filter(filter))
                         .uri("lb://tasks-microservice"))
                 .route("project_routes", r-> r.path("projects/**")
+                        .filters(f -> f.filter(filter))
                         .uri("lb://projects-microservice"))
                 .build();
     }
