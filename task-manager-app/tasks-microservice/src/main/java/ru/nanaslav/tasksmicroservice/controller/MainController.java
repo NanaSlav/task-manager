@@ -4,12 +4,12 @@
 package ru.nanaslav.tasksmicroservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.nanaslav.tasksmicroservice.model.Task;
+import ru.nanaslav.tasksmicroservice.model.dto.TaskRequest;
 import ru.nanaslav.tasksmicroservice.repository.TaskRepository;
+import ru.nanaslav.tasksmicroservice.service.TaskService;
 
 /**
  * Главный контроллер для задач
@@ -23,6 +23,8 @@ public class MainController {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    TaskService taskService;
     /**
      * Тестовый метод home
      *
@@ -38,4 +40,15 @@ public class MainController {
         return "home";
     }
 
+    /**
+     * Создание задачи
+     *
+     * @param taskRequest
+     * @return
+     */
+    @GetMapping("/create")
+    // TODO это пока тестовый вариант для проверки взаимодействия микросервисов, потом нужно доделать
+    public ResponseEntity<Task> createTask(@RequestBody TaskRequest taskRequest, @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(taskService.createTask(taskRequest.getTitle(), token));
+    }
 }

@@ -46,7 +46,7 @@ public class WebSecurityConfig {
         http.cors(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers(HttpMethod.POST,"/auth/sign-up").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/auth/sign-up", "/auth/sign-in").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

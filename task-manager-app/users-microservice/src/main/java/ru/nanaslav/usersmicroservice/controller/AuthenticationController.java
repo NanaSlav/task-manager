@@ -32,11 +32,6 @@ public class AuthenticationController {
         return authenticationService.signUp(request);
     }
 
-    @GetMapping("/sign-up")
-    public String signUp() {
-        return "sign-up";
-    }
-
     /**
      * Авторизация пользователя
      *

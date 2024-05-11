@@ -6,6 +6,8 @@ package ru.nanaslav.usersmicroservice.service;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,8 +64,13 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return getUserByUsername(username);
+    }
+
+    public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
 
     /**
      * Проверка наличия пользователя в системе
@@ -72,5 +79,15 @@ public class UserService implements UserDetailsService {
      */
     private boolean isUserExists(@NotNull User user) {
         return userRepository.findByUsername(user.getUsername()) != null;
+    }
+
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return getUserByUsername(auth.getName());
+    }
+
+    public String getCurrentUserName() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 }

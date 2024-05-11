@@ -11,44 +11,19 @@ import ru.nanaslav.usersmicroservice.repository.UserRepository;
 import ru.nanaslav.usersmicroservice.service.UserService;
 
 /**
- * Главный контроллер пользователей
+ * Контроллер для обработки запросов о пользователях
  *
  * @author nana
  * @version 1.0.0
  */
 
-// TODO его нужно будеть поделить...
 @RestController
 @RequestMapping("/users")
-public class MainController {
+public class UsersController {
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     UserService userService;
-
-    /**
-     * Тестовый метод home
-     *
-     * @return {@link String}
-     */
-    @GetMapping("/home")
-    public String home() {
-        userService.createUser("nanaslav", "123");
-        return "users - home";
-    }
-
-    /**
-     * Создание нового пользователя
-     *
-     * @param user пользователь
-     * @return {@link ResponseEntity}
-     */
-    @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        userService.createUser(user);
-        return ResponseEntity.ok(user);
-    }
 
     /**
      * Получение пользователя по имени
@@ -67,6 +42,21 @@ public class MainController {
             // TODO тут бы тоже не с 404 возвращать..
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * Получение текущего авторизованного пользователя
+     *
+     * @return {@link ResponseEntity<User>} пользователь
+     */
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser() {
+        return ResponseEntity.ok(userService.getCurrentUser());
+    }
+
+    @GetMapping("/current-username")
+    public ResponseEntity<String> getCurrentUsername() {
+        return ResponseEntity.ok(userService.getCurrentUserName());
     }
 
     @GetMapping("/test")

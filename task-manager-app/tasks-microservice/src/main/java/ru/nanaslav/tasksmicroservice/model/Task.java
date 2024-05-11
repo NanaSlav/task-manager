@@ -22,6 +22,8 @@ public class Task {
     private String title;
     private String status;
 
+    private String author;
+
     public String getTitle() {
         return title;
     }
@@ -30,8 +32,16 @@ public class Task {
         this.title = title;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getStatus() {
         return status;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 
     public void setStatus(String status) {
