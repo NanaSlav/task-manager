@@ -5,7 +5,7 @@ package ru.nanaslav.tasksmicroservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.nanaslav.tasksmicroservice.model.Task;
+import ru.nanaslav.tasksmicroservice.domain.model.Task;
 import ru.nanaslav.tasksmicroservice.proxy.UsersProxy;
 
 @Service

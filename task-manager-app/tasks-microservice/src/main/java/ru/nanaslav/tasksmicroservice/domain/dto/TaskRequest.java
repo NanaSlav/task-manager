@@ -1,7 +1,7 @@
 /**
  * Created on 11/05/2024
  */
-package ru.nanaslav.tasksmicroservice.model.dto;
+package ru.nanaslav.tasksmicroservice.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

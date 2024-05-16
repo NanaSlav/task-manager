@@ -6,8 +6,8 @@ package ru.nanaslav.tasksmicroservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nanaslav.tasksmicroservice.model.Task;
-import ru.nanaslav.tasksmicroservice.model.dto.TaskRequest;
+import ru.nanaslav.tasksmicroservice.domain.model.Task;
+import ru.nanaslav.tasksmicroservice.domain.dto.TaskRequest;
 import ru.nanaslav.tasksmicroservice.repository.TaskRepository;
 import ru.nanaslav.tasksmicroservice.service.TaskService;
 
