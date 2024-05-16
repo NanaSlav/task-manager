@@ -22,11 +22,8 @@ import java.util.List;
 @Data
 @Builder
 public class Task {
-    public Task(String title) {
-        this.title = title;
-    }
     @Id
-    private String Id;
+    private String id;
     /**
      * Название задачи
      */
@@ -72,17 +69,20 @@ public class Task {
     /**
      * История изменений
      */
-    private List<HistoryEvent> history = new ArrayList<>();
+    private List<HistoryEvent> history;
     /**
      * Комментарии к задаче
      */
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
     /**
      * Добавление события в историю
      * @param event {@link HistoryEvent}
      */
     public void addHistoryEvent(HistoryEvent event) {
+        if (history == null) {
+            history = new ArrayList<>();
+        }
         history.add(event);
     }
 
@@ -91,6 +91,9 @@ public class Task {
      * @param comment {@link Comment}
      */
     public void addComment(Comment comment) {
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
         comments.add(comment);
     }
 }

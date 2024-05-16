@@ -11,6 +11,7 @@ import ru.nanaslav.tasksmicroservice.proxy.UsersProxy;
 import ru.nanaslav.tasksmicroservice.repository.TaskRepository;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Сервис для работы с задачами
@@ -92,9 +93,12 @@ public class TaskService {
      * @return {@link Task}
      */
     private Task updateDescription(Task task, String description, String username) {
-        task.setDescription(description);
-        updateHistory(task, HistoryEventType.DESCRIPTION_CHANGED, username);
-        taskRepository.insert(task);
+        // Если описание не изменилось - ничего не меняем
+        if (!Objects.equals(task.getDescription(), description)) {
+            task.setDescription(description);
+            updateHistory(task, HistoryEventType.DESCRIPTION_CHANGED, username);
+            taskRepository.save(task);
+        }
         return task;
     }
 
@@ -125,10 +129,10 @@ public class TaskService {
      */
     private Task updateStatus(Task task, Status status, String username) {
         // Если статус не изменился - ничего не меняем
-        if (!task.getStatus().equals(status)) {
+        if ((status != null) && !status.equals(task.getStatus())) {
             task.setStatus(status);
             updateHistory(task, HistoryEventType.STATUS_CHANGED, username);
-            taskRepository.insert(task);
+            taskRepository.save(task);
         }
         return task;
     }
@@ -178,10 +182,10 @@ public class TaskService {
      */
     private Task changeAssignee(Task task, String assignee, String username) {
         // Если исполнитель не изменился - ничего не делаем
-        if (!task.getAssignee().equals(assignee)) {
+        if (assignee != null && !assignee.equals(task.getAssignee())) {
             task.setAssignee(assignee);
             updateHistory(task, HistoryEventType.ASSIGNEE_CHANGED, username);
-            taskRepository.insert(task);
+            taskRepository.save(task);
         }
         return task;
     }
@@ -219,7 +223,7 @@ public class TaskService {
                 .build();
         task.addComment(comment);
         updateHistory(task, HistoryEventType.COMMENT_ADDED, username);
-        taskRepository.insert(task);
+        taskRepository.save(task);
         return task;
     }
 
@@ -250,10 +254,10 @@ public class TaskService {
      */
     private Task changeDifficulty(Task task, Difficulty difficulty, String username) {
         // Если сложность не изменилась - ничего не делаем
-        if (!task.getDifficulty().equals(difficulty)) {
+        if (difficulty != null && !difficulty.equals(task.getDifficulty())) {
             task.setDifficulty(difficulty);
             updateHistory(task, HistoryEventType.DIFFICULTY_CHANGED, username);
-            taskRepository.insert(task);
+            taskRepository.save(task);
         }
         return task;
     }
@@ -285,10 +289,10 @@ public class TaskService {
      */
     private Task changePriority(Task task, Priority priority, String username) {
         // Если приоритет не изменился - ничего не делаем
-        if (!task.getPriority().equals(priority)) {
+        if (priority != null  && !priority.equals(task.getPriority())) {
             task.setPriority(priority);
             updateHistory(task, HistoryEventType.PRIORITY_CHANGED, username);
-            taskRepository.insert(task);
+            taskRepository.save(task);
         }
         return task;
     }
@@ -320,10 +324,10 @@ public class TaskService {
      */
     private Task changeDeadline(Task task, Date deadline, String  username) {
         // Если срок выполнения не изменился - ничего не делаем
-        if (!task.getDeadline().equals(deadline)) {
+        if (Objects.equals(deadline, task.getDeadline())) {
             task.setDeadline(deadline);
             updateHistory(task, HistoryEventType.DEADLINE_CHANGED, username);
-            taskRepository.insert(task);
+            taskRepository.save(task);
         }
         return task;
     }
