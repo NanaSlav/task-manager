@@ -3,6 +3,7 @@
  */
 package ru.nanaslav.tasksmicroservice.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -64,6 +65,7 @@ public class Task {
     /**
      * Срок выполнения задачи
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
 
     /**
