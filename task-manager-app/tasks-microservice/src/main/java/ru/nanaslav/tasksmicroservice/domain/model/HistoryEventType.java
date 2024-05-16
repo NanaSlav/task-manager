@@ -16,7 +16,9 @@ public enum HistoryEventType {
     PRIORITY_CHANGED("Изменен приоритет"),
     ASSIGNEE_CHANGED("Изменен исполнитель"),
     DEADLINE_CHANGED("Изменен срок выполения"),
-    DESCRIPTION_CHANGED("Изменено описание задачи");
+    DESCRIPTION_CHANGED("Изменено описание задачи"),
+    DIFFICULTY_CHANGED("Изменена оценка сложности");
+
 
     private final String description;
 

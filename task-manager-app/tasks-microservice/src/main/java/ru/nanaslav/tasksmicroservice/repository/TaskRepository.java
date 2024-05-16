@@ -7,4 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import ru.nanaslav.tasksmicroservice.domain.model.Task;
 
 public interface TaskRepository extends MongoRepository<Task, String> {
+    Task findTaskById(String id);
 }

@@ -8,6 +8,8 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public class Task {
     /**
      * Статус задачи
      */
-    private String status;
+    private Status status;
     /**
      * Автор задачи
      */
@@ -63,11 +65,32 @@ public class Task {
     private String description;
 
     /**
+     * Срок выполнения задачи
+     */
+    private Date deadline;
+
+    /**
      * История изменений
      */
-    private List<HistoryEvent> history;
+    private List<HistoryEvent> history = new ArrayList<>();
     /**
      * Комментарии к задаче
      */
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
+
+    /**
+     * Добавление события в историю
+     * @param event {@link HistoryEvent}
+     */
+    public void addHistoryEvent(HistoryEvent event) {
+        history.add(event);
+    }
+
+    /**
+     * Добавление комментария
+     * @param comment {@link Comment}
+     */
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 }

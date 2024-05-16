@@ -30,25 +30,25 @@ public class MainController {
      *
      * @return {@link String}
      */
-    @GetMapping("/home")
-    public String home() {
-        // Тестовый код для БД
-        Task task = new Task("task1");
-        task.setStatus("open");
-        taskRepository.insert(task);
-
-        return "home";
-    }
-
-    /**
-     * Создание задачи
-     *
-     * @param taskRequest
-     * @return
-     */
-    @GetMapping("/create")
-    // TODO это пока тестовый вариант для проверки взаимодействия микросервисов, потом нужно доделать
-    public ResponseEntity<Task> createTask(@RequestBody TaskRequest taskRequest, @RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(taskService.createTask(taskRequest.getTitle(), token));
-    }
+//    @GetMapping("/home")
+//    public String home() {
+//        // Тестовый код для БД
+//        Task task = new Task("task1");
+//        task.setStatus("open");
+//        taskRepository.insert(task);
+//
+//        return "home";
+//    }
+//
+//    /**
+//     * Создание задачи
+//     *
+//     * @param taskRequest
+//     * @return
+//     */
+//    @GetMapping("/create")
+//    // TODO это пока тестовый вариант для проверки взаимодействия микросервисов, потом нужно доделать
+//    public ResponseEntity<Task> createTask(@RequestBody TaskRequest taskRequest, @RequestHeader("Authorization") String token) {
+//        return ResponseEntity.ok(taskService.createTask(taskRequest.getTitle(), token));
+//    }
 }

@@ -3,6 +3,7 @@
  */
 package ru.nanaslav.tasksmicroservice.domain.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
  * @author nana
  */
 @Data
+@Builder
 public class Comment {
 
     /**
