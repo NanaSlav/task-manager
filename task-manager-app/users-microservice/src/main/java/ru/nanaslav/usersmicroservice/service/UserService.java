@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.nanaslav.usersmicroservice.domain.dto.PasswordRequest;
 import ru.nanaslav.usersmicroservice.domain.dto.UserDTO;
 import ru.nanaslav.usersmicroservice.domain.model.User;
 import ru.nanaslav.usersmicroservice.repository.UserRepository;
@@ -121,16 +122,15 @@ public class UserService implements UserDetailsService {
     /**
      * Изменить пароль текущего пользователя
      *
-     * @param oldPassword старый пароль
-     * @param newPassword новый пароль
-     *
+     * @param request запрос на изменение пароля
      * @return {@link User} пользователь
      */
-    public User changePassword(String oldPassword, String newPassword) {
+    public User changePassword(PasswordRequest request) {
         User user = getCurrentUser();
         // Перед сменой пароля нужно проверить текущий
-        if (bCryptPasswordEncoder().encode(oldPassword).equals(user.getPassword())) {
-            user.setPassword(bCryptPasswordEncoder().encode(newPassword));
+        // TODO сообщение если не совпал
+        if (bCryptPasswordEncoder().matches(request.getOldPassword(), user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder().encode(request.getNewPassword()));
             userRepository.save(user);
         }
         return user;
@@ -143,11 +143,13 @@ public class UserService implements UserDetailsService {
      * @return {@link UserDTO}
      */
     public UserDTO updateUserProfile(UserDTO changedUser) {
-        User user = userRepository.findByUsername(changedUser.getUsername());
-        user.setAvatar(changedUser.getAvatar());
-        user.setBio(changedUser.getBio());
-        user.setQualification(changedUser.getQualification());
-        userRepository.save(user);
+        User user = getCurrentUser();
+        if (user.getUsername().equals(changedUser.getUsername())) {
+            user.setAvatar(changedUser.getAvatar());
+            user.setBio(changedUser.getBio());
+            user.setQualification(changedUser.getQualification());
+            userRepository.save(user);
+        }
         return new UserDTO(user);
     }
 

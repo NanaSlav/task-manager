@@ -6,6 +6,7 @@ package ru.nanaslav.usersmicroservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.nanaslav.usersmicroservice.domain.dto.PasswordRequest;
 import ru.nanaslav.usersmicroservice.domain.dto.UserDTO;
 import ru.nanaslav.usersmicroservice.domain.model.User;
 import ru.nanaslav.usersmicroservice.repository.UserRepository;
@@ -33,7 +34,7 @@ public class UsersController {
      * @return {@link ResponseEntity<UserDTO>}
      */
     @GetMapping("/")
-    public ResponseEntity<UserDTO> getUserByUsername(@RequestBody String username) {
+    public ResponseEntity<UserDTO> getUserByUsername(@RequestParam String username) {
         return ResponseEntity.ok(userService.getUserProfileByUsername(username));
     }
 
@@ -65,19 +66,18 @@ public class UsersController {
      * @return пользователь
      */
     @PostMapping("/update")
-    public ResponseEntity<UserDTO> updateUserProfile(UserDTO user) {
+    public ResponseEntity<UserDTO> updateUserProfile(@RequestBody UserDTO user) {
         return ResponseEntity.ok(userService.updateUserProfile(user));
     }
 
     /**
      * Смена пароля
      *
-     * @param oldPassword старый пароль
-     * @param newPassword новый пароль
+     * @param request запрос на изменение пароля
      * @return пользователь
      */
     @PostMapping("/update/password")
-    public ResponseEntity<User> changePassword(String oldPassword, String newPassword) {
-        return ResponseEntity.ok(userService.changePassword(oldPassword, newPassword));
+    public ResponseEntity<User> changePassword(@RequestBody PasswordRequest request) {
+        return ResponseEntity.ok(userService.changePassword(request));
     }
 }
