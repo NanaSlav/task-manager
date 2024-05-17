@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.nanaslav.usersmicroservice.domain.dto.UserDTO;
 import ru.nanaslav.usersmicroservice.domain.model.User;
 import ru.nanaslav.usersmicroservice.repository.UserRepository;
 
@@ -39,7 +40,7 @@ public class UserService implements UserDetailsService {
      *
      * @return {@link User} пользователь
      */
-    public User createUser(String username, String password) {
+    private User createUser(String username, String password) {
         User user = User.builder()
                 .username(username)
                 .password(bCryptPasswordEncoder().encode(password))
@@ -53,7 +54,6 @@ public class UserService implements UserDetailsService {
      * @param user пользователь
      * @return {@link User}
      */
-
     public User createUser (User user) {
         if (!isUserExists(user)) {
             return userRepository.insert(user);
@@ -67,6 +67,12 @@ public class UserService implements UserDetailsService {
         return getUserByUsername(username);
     }
 
+    /**
+     * Получение пользователя по имени
+     *
+     * @param username имя пользователя
+     * @return {@link User}
+     */
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -81,13 +87,77 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(user.getUsername()) != null;
     }
 
+    /**
+     * Получение текущего авторизованного пользователя
+     *
+     * @return {@link User}
+     */
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return getUserByUsername(auth.getName());
     }
 
+    /**
+     * Получение имени текущего авторизованного пользователя
+     *
+     * @return имя пользователя
+     */
     public String getCurrentUserName() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
+    }
+
+    /**
+     * Получение профиля текущего пользователя
+     *
+     * @return {@link UserDTO}
+     */
+    public UserDTO getCurrentUserPofile() {
+        return new UserDTO(getCurrentUser());
+    }
+
+
+
+    /**
+     * Изменить пароль текущего пользователя
+     *
+     * @param oldPassword старый пароль
+     * @param newPassword новый пароль
+     *
+     * @return {@link User} пользователь
+     */
+    public User changePassword(String oldPassword, String newPassword) {
+        User user = getCurrentUser();
+        // Перед сменой пароля нужно проверить текущий
+        if (bCryptPasswordEncoder().encode(oldPassword).equals(user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder().encode(newPassword));
+            userRepository.save(user);
+        }
+        return user;
+    }
+
+    /**
+     * Редактирование профиля пользователя
+     *
+     * @param changedUser Измененный пользователь
+     * @return {@link UserDTO}
+     */
+    public UserDTO updateUserProfile(UserDTO changedUser) {
+        User user = userRepository.findByUsername(changedUser.getUsername());
+        user.setAvatar(changedUser.getAvatar());
+        user.setBio(changedUser.getBio());
+        user.setQualification(changedUser.getQualification());
+        userRepository.save(user);
+        return new UserDTO(user);
+    }
+
+    /**
+     * Получение профиля пользователя по его имени
+     *
+     * @param username имя пользователя
+     * @return {@link UserDTO}
+     */
+    public UserDTO getUserProfileByUsername(String username) {
+        return new UserDTO(getUserByUsername(username));
     }
 }

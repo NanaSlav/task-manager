@@ -1,5 +1,6 @@
 /**
  * Created on 26/04/2024
+ * Updated on 17/05/2024
  */
 package ru.nanaslav.usersmicroservice.domain.model;
 
@@ -15,7 +16,7 @@ import java.util.Collection;
  * Модель пользователя
  *
  * @author nana
- * @version 0.0.1
+ * @version 1.0.0
  */
 @Document("users")
 @Builder
@@ -24,8 +25,31 @@ public class User implements UserDetails {
     @Id
     private String id;
 
+    /**
+     * Имя пользователя - должно быть уникальным
+     */
     private String username;
+    /**
+     * Пароль
+     */
     private String password;
+    /**
+     * Почта - должна быть уникальной
+     */
+    private String email;
+    /******************************************************************************/
+    /**
+     * Описание пользователя
+     */
+    private String bio;
+    /**
+     * Аватар пользователя
+     */
+    private String avatar;
+    /**
+     * Квалификация работника
+     */
+    private String qualification;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
