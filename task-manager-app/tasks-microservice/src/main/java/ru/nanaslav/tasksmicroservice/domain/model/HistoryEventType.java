@@ -15,7 +15,7 @@ public enum HistoryEventType {
     COMMENT_ADDED("Добавлен комментарий"),
     PRIORITY_CHANGED("Изменен приоритет"),
     ASSIGNEE_CHANGED("Изменен исполнитель"),
-    DEADLINE_CHANGED("Изменен срок выполения"),
+    DEADLINE_CHANGED("Изменен срок выполнения"),
     DESCRIPTION_CHANGED("Изменено описание задачи"),
     DIFFICULTY_CHANGED("Изменена оценка сложности");
 
