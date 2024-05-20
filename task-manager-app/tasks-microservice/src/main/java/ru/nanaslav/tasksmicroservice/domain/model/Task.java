@@ -78,6 +78,15 @@ public class Task {
     private List<Comment> comments;
 
     /**
+     * Записи о списании времени по задаче
+     */
+    private List<TimeRecord> timeRecords;
+    /**
+     * Затраченное время
+     */
+    private int totalTimeSpend = 0;
+
+    /**
      * Добавление события в историю
      * @param event {@link HistoryEvent}
      */
@@ -98,4 +107,17 @@ public class Task {
         }
         comments.add(comment);
     }
+
+    /**
+     * Добавление записи о списании времени
+     * @param record {@link TimeRecord}
+     */
+    public void addTimeRecord(TimeRecord record) {
+        if (timeRecords == null) {
+            timeRecords = new ArrayList<>();
+        }
+        timeRecords.add(record);
+        totalTimeSpend += record.getTimeSpent();
+    }
+
 }

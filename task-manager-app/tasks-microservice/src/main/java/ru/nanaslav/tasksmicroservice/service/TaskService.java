@@ -229,6 +229,30 @@ public class TaskService {
     }
 
     /**
+     * Добавить запись о списании времени на задачу
+     * @param task задача
+     * @param record запись о списании времени
+     */
+    private void addTimeRecord(Task task, TimeRecord record) {
+        task.addTimeRecord(record);
+        taskRepository.save(task);
+    }
+
+    /**
+     * Добавление записи о списании времени на задачу
+     * @param taskId id задачи
+     * @param userToken токен текущего пользователя
+     * @param record запись о спиании времени
+     */
+    public TimeRecord addTimeRecord(String taskId, String userToken, TimeRecord record) {
+        Task task = taskRepository.findTaskById(taskId);
+        // Установка текущего пользователя в качестве исполнителя
+        record.setExecutor(usersProxy.getCurrentUsername(userToken).getBody());
+        addTimeRecord(task, record);
+        return record;
+    }
+
+    /**
      * Изменить оценку сложности задачи
      *
      * @param taskId id задачи

@@ -290,4 +290,18 @@ public class TaskController {
                                               @RequestBody Comment comment) {
         return ResponseEntity.ok(taskService.addComment(taskId, comment.getText(), token));
     }
+
+    /**
+     * Добавление записи о списании времени
+     * @param token токен пользователя
+     * @param taskId id задачи
+     * @param record запись о списании времени
+     * @return добавленная запись о списании времени
+     */
+    @PostMapping("/{taskId}/time")
+    public ResponseEntity<TimeRecord> addTimeRecord(@RequestHeader("Authorization") String token,
+                                                    @PathVariable String taskId,
+                                                    @RequestBody TimeRecord record) {
+        return ResponseEntity.ok(taskService.addTimeRecord(taskId, token, record));
+    }
 }
