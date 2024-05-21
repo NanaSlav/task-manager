@@ -31,7 +31,7 @@ public class RouteConfiguration {
                 .route("tasks-routes", r -> r.path("/tasks/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://tasks-microservice"))
-                .route("project_routes", r-> r.path("projects/**")
+                .route("project_routes", r-> r.path("/projects/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://projects-microservice"))
                 .build();
