@@ -22,6 +22,9 @@ import java.util.Collection;
 @Builder
 @Data
 public class User implements UserDetails {
+    /**
+     * Id пользователя
+     */
     @Id
     private String id;
 
