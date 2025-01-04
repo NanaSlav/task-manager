@@ -34,6 +34,9 @@ public class RouteConfiguration {
                 .route("project_routes", r-> r.path("/projects/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://projects-microservice"))
+                .route("notification-routes", r -> r.path("/notification/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://notification-microservice"))
                 .build();
     }
 }
